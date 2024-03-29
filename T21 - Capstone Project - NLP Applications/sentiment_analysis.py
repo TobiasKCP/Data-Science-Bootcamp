@@ -10,7 +10,7 @@ nlp.add_pipe('spacytextblob')
 
 # Getting the data from the relevant cvs file.
 
-review_data = pd.read_csv(r"T21 - Capstone Project - NLP Applications\amazon_product_reviews.csv", low_memory=False)
+review_data = pd.read_csv(r"T21 - Capstone Project - NLP Applications\amazon_product_reviews - reduced.csv", low_memory=False)
 clean_data = review_data.dropna(subset=['reviews.text'])
 reviews = pd.DataFrame({'original_text':clean_data['reviews.text']})
 print(reviews)
@@ -82,34 +82,30 @@ print(reviews)
 
 # While loop to allow the user to look specific entries in the dataframe and compare the similarity of reviews.
 while x == 1:
-    try: 
-        user_decision = str(input("\n Would you like to look at a specific review or compare two reviews for similarity. \n Enter: \n 'R' to look a specific review \n 'S' to check the similarity between two reviews \n 'N' to exit the program \n -"))
-        if user_decision == 'N':
-            print("exiting program")
-            x = 0
+    user_decision = str(input("\n Would you like to look at a specific review or compare two reviews for similarity. \n Enter: \n 'R' to look a specific review \n 'S' to check the similarity between two reviews \n 'N' to exit the program \n -"))
+    if user_decision == 'N':
+        print("exiting program")
+        x = 0
         
-        elif user_decision == 'R':
-            selected = int(input("Please enter the index of the review you would like to view: "))
-            print(" ")
-            print(reviews.loc[[selected]])
-            print(" ")
+    elif user_decision == 'R':
+        selected = int(input("Please enter the index of the review you would like to view: "))
+        print(" ")
+        print(reviews.loc[[selected]])
+        print(" ")
 
-        elif user_decision == 'S':
-            try: to_comp1 = int(input("Please enter the index of one of the reviews you would like to compare: ")) 
-            except ValueError: print("Please enter a integer")
+    elif user_decision == 'S':
+        try: to_comp1 = int(input("Please enter the index of one of the reviews you would like to compare: ")) 
+        except ValueError: print("Please enter a integer")
 
-            try: to_comp2 = int(input("Please enter the index of one of the reviews you would like to compare: "))
-            except ValueError: print("Please enter a integer")
+        try: to_comp2 = int(input("Please enter the index of one of the reviews you would like to compare: "))
+        except ValueError: print("Please enter a integer")
 
-            to_comp1 = nlp(str(reviews['original_text'][to_comp1]))
-            print("text 1: " + str(to_comp1))
-            to_comp2 = nlp(str(reviews['original_text'][to_comp2]))
-            print("text 2: " + str(to_comp2))
-            print("The similarity is: "+ str(to_comp1.similarity(to_comp2)))
+        to_comp1 = nlp(str(reviews['original_text'][to_comp1]))
+        print("text 1: " + str(to_comp1))
+        to_comp2 = nlp(str(reviews['original_text'][to_comp2]))
+        print("text 2: " + str(to_comp2))
+        print("The similarity is: "+ str(to_comp1.similarity(to_comp2)))
 
-        else:
-            print("Please select a valid option")
-
-    except ValueError:
-        print("Please entre a string.")
+    else:
+        print("Please select a valid option")
 
