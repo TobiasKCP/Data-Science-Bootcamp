@@ -86,6 +86,7 @@ while x == 1:
     if user_decision == 'N':
         print("exiting program")
         x = 0
+        reviews.to_excel('reviews_out.xlsx')
         
     elif user_decision == 'R':
         selected = int(input("Please enter the index of the review you would like to view: "))
